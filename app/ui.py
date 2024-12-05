@@ -11,11 +11,11 @@ from tkinter.ttk import (
 )
 from tkinter.filedialog import askopenfilename as _askopen, asksaveasfilename as _asksave
 from tkinter.messagebox import askyesno as _askyesno, showerror as _showerror
-from image import BitmapImage as _BitmapImage, DOWNLOADS_PATH as _DOWNLOADS_PATH
 from pathlib import Path as _Path
 from os import startfile as _startfile
 from sys import platform as _platform
 from subprocess import Popen as _Popen
+from .image import BitmapImage as _BitmapImage, DOWNLOADS_PATH as _DOWNLOADS_PATH
 
 
 class App(_Tk):
