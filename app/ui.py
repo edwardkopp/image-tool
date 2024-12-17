@@ -67,13 +67,14 @@ class App(_Tk):
     def _conversion_finished(destination_filepath: str) -> None:
         if not _askyesno("Convert", "Conversion complete! Would you like to open the folder of your converted image?"):
             return
+        output_directory = str(_Path(destination_filepath).parent)
         if _platform == "win32":
             from os import startfile as _startfile
-            _startfile(str(_Path(destination_filepath).parent))
+            _startfile(output_directory)
         elif _platform.startswith("linux"):
-            _Popen(["xdg-open", str(destination_filepath)])
+            _Popen(["xdg-open", output_directory])
         elif _platform == "darwin":
-            _Popen(["open", str(destination_filepath)])
+            _Popen(["open", output_directory])
         else:
             _showerror("Cannot Open Folder", "Cannot open folder with converted image. Platform could not be determined.")
 
