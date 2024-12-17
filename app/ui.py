@@ -12,7 +12,6 @@ from tkinter.ttk import (
 from tkinter.filedialog import askopenfilename as _askopen, asksaveasfilename as _asksave
 from tkinter.messagebox import askyesno as _askyesno, showerror as _showerror
 from pathlib import Path as _Path
-from os import startfile as _startfile
 from sys import platform as _platform
 from subprocess import Popen as _Popen
 from .image import BitmapImage as _BitmapImage, DOWNLOADS_PATH as _DOWNLOADS_PATH
@@ -69,6 +68,7 @@ class App(_Tk):
         if not _askyesno("Convert", "Conversion complete! Would you like to open the folder of your converted image?"):
             return
         if _platform == "win32":
+            from os import startfile as _startfile
             _startfile(str(_Path(destination_filepath).parent))
         elif _platform.startswith("linux"):
             _Popen(["xdg-open", str(destination_filepath)])
