@@ -85,7 +85,7 @@ class BitmapImage:
         if extension not in self.VALID_EXTENSIONS or extension == self.source_extension:
             return False
         if isinstance(required_file_type, str):
-            if extension in self.IMAGE_TYPES[required_file_type]:
+            if extension not in self.IMAGE_TYPES[required_file_type]:
                 return False
         return True
 
