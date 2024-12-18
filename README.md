@@ -22,3 +22,7 @@ To convert to ICO, source images must have the same width and height, and must r
 
 - 32x32 (for "Minimum" preset) or 48x48 (for "Recommended" preset) for website favicon
 - 256x256 for program icon
+
+## Python Version
+
+Use Python 3.13.
