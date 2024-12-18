@@ -133,9 +133,9 @@ class App(_Tk):
     def _common_convert(self) -> None:
         image_types_copy = self._loaded_image.IMAGE_TYPES.copy()
         valid_types = [
-            (label, extension)
-            for label, extension in image_types_copy.items()
-            if extension not in (self._loaded_image.source_extension, self._loaded_image.IMAGE_TYPES[self._loaded_image.ICO])
+            (label, extensions)
+            for label, extensions in image_types_copy.items()
+            if self._loaded_image.source_extension not in extensions and label != self._loaded_image.ICO
         ]
         destination = _asksave(
             parent=self,
