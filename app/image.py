@@ -14,16 +14,20 @@ class BitmapImage:
     WEBP = "WEBP"
     JPEG = "JPEG"
 
-    IMAGE_TYPES = {
-        PNG: ".png",
-        ICO: ".ico",
-        WEBP: ".webp",
-        JPEG: ".jpg"
+    IMAGE_TYPES: dict[str, list[str]] = {
+        PNG: [".png"],
+        ICO: [".ico"],
+        WEBP: [".webp"],
+        JPEG: [".jpg", ".jpeg"]
     }
     """
     Dictionary of file types with their corresponding extensions.
-    Keys are the file type while values are the extensions.
+    Keys are the file type while values are a list of valid extensions.
+    Position 0 of the list value for extensions should be the preferred extension.
     """
+
+    VALID_EXTENSIONS: list[str] = [extension for extensions in IMAGE_TYPES.values() for extension in extensions]
+
 
     def __init__(self, path: str):
         """
@@ -37,9 +41,9 @@ class BitmapImage:
         if not _isfile(path) or not _access(path, _R_OK):
             raise IOError(f"Provided `path` is invalid: {path}")
         self.source_extension = self._extension(path)
-        if self.source_extension not in self.IMAGE_TYPES.values():
+        if self.source_extension not in self.VALID_EXTENSIONS:
             raise ValueError(f"Provided `path` has an unrecognized extension: {self.source_extension}")
-        if self.source_extension == self.IMAGE_TYPES[self.ICO]:
+        if self.source_extension in self.IMAGE_TYPES[self.ICO]:
             raise FileExistsError("Provided `path` seems to point to an ICO file; nothing can be done with it.")
         with open(path, "rb") as image:
             self._source_bytes = image.read()
@@ -68,20 +72,20 @@ class BitmapImage:
             return False
         return True
 
-    def _valid_destination_extension(self, path: str, required_extension: str | None = None) -> bool:
+    def _valid_destination_extension(self, path: str, required_file_type: str | None = None) -> bool:
         """
         Validates the extension of the provided destination path.
         If this returns ``False``, it is recommended to throw ``ValueError``.
 
         :param path: Destination path string to validate.
-        :param required_extension: Extension to require in the destination path.
+        :param required_file_type: File type to require in the destination path.
         :return: Boolean indicating if provided destination path is valid.
         """
         extension = self._extension(path)
-        if extension not in self.IMAGE_TYPES.values() or extension == self.source_extension:
+        if extension not in self.VALID_EXTENSIONS or extension == self.source_extension:
             return False
-        if isinstance(required_extension, str):
-            if extension != required_extension:
+        if isinstance(required_file_type, str):
+            if extension in self.IMAGE_TYPES[required_file_type]:
                 return False
         return True
 
@@ -98,7 +102,7 @@ class BitmapImage:
         if not self._valid_destination_extension(output_path):
             raise ValueError(f"Provided output path has an invalid extension: {self._extension(output_path)}")
         with _Image.open(_BytesIO(self._source_bytes)) as image:
-            if self._extension(output_path) == self.IMAGE_TYPES[self.JPEG]:
+            if self._extension(output_path) in self.IMAGE_TYPES[self.JPEG]:
                 image = image.convert("RGB")
             image.save(output_path)
 
@@ -128,7 +132,7 @@ class BitmapImage:
         """
         if not self._valid_destination_io(output_path):
             raise IOError(f"Provided output path is invalid: {output_path}")
-        if not self._valid_destination_extension(output_path, self.IMAGE_TYPES[self.ICO]):
+        if not self._valid_destination_extension(output_path, self.ICO):
             raise ValueError(f"Provided output path must have `.ico` extension.")
         if not len(resolutions):
             raise ValueError("No output resolutions were provided.")

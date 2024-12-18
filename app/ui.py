@@ -150,7 +150,7 @@ class App(_Tk):
         self._conversion_finished(destination)
 
     def _ico_convert(self) -> None:
-        ico_extension = self._loaded_image.IMAGE_TYPES[self._loaded_image.ICO]
+        ico_extension = self._loaded_image.IMAGE_TYPES[self._loaded_image.ICO][0]
         destination = _asksave(
             parent=self,
             initialdir=_DOWNLOADS_PATH,
