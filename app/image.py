@@ -14,13 +14,15 @@ class BitmapImage:
     ICNS = "ICNS"
     WEBP = "WEBP"
     JPEG = "JPEG"
+    BMP = "BMP"
 
     IMAGE_TYPES: dict[str, list[str]] = {
         PNG: [".png"],
         ICO: [".ico"],
         ICNS: [".icns"],
         WEBP: [".webp"],
-        JPEG: [".jpg", ".jpeg"]
+        JPEG: [".jpg", ".jpeg"],
+        BMP: [".bmp"]
     }
     """
     Dictionary of file types with their corresponding extensions.
