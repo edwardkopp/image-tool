@@ -29,8 +29,8 @@ class App(_Tk):
     _ICO_PRESET_CHOICES = {
         _ICO_APP_MINIMUM: [16, 24, 32, 48, 256],
         _ICO_APP_RECOMMENDED: [16, 24, 32, 48, 64, 128, 256],
-        _ICO_FAVICON: [16, 32],
-        _ICO_FAVICON_EXPANDED: [16, 32, 48]
+        _ICO_FAVICON: [16, 32, 48],
+        _ICO_FAVICON_EXPANDED: [16, 32, 48, 64]
     }
 
     def __init__(self):
