@@ -11,12 +11,14 @@ class BitmapImage:
 
     PNG = "PNG"
     ICO = "ICO"
+    ICNS = "ICNS"
     WEBP = "WEBP"
     JPEG = "JPEG"
 
     IMAGE_TYPES: dict[str, list[str]] = {
         PNG: [".png"],
         ICO: [".ico"],
+        ICNS: [".icns"],
         WEBP: [".webp"],
         JPEG: [".jpg", ".jpeg"]
     }
