@@ -30,6 +30,8 @@ class BitmapImage:
     Position 0 of the list value for extensions should be the preferred extension.
     """
 
+    ICNS_SIZES = [16, 32, 48, 128, 256, 512, 1024]
+
     VALID_EXTENSIONS: list[str] = [extension for extensions in IMAGE_TYPES.values() for extension in extensions]
 
 
@@ -110,12 +112,12 @@ class BitmapImage:
                 image = image.convert("RGB")
             image.save(output_path)
 
-    def is_valid_ico(self, minimum_size: int | None = None) -> bool:
+    def is_valid_icon(self, minimum_size: int | None = None) -> bool:
         """
-        Checks if the source image is able to convert to ICO.
+        Checks if the source image is able to convert to ICO or ICNS.
 
         :param minimum_size: Optionally provide a minimum size integer. If None provided, this check will be skipped.
-        :return: True if source can convert to ICO; False if cannot.
+        :return: True if source can convert; False if cannot.
         """
         with _Image.open(_BytesIO(self._source_bytes)) as image:
             if image.width != image.height:
@@ -124,6 +126,21 @@ class BitmapImage:
                 if image.width < minimum_size:
                     return False
         return True
+
+    def _bitmap_to_icon(self, output_path: str, *resolutions: int) -> None:
+        """
+        Saves bitmap to icon file to the specified path. Width and height of the bitmap image must be the same value.
+
+        :param output_path: Path to save icon to. Must have proper icon extension.
+        :param resolutions: Integers of resolutions to save for the icon.
+        :raise ValueError: If source dimensions are invalid.
+        """
+        with _Image.open(_BytesIO(self._source_bytes)) as image:
+            if not self.is_valid_icon(max(resolutions)):
+                raise ValueError(f"Source dimensions are invalid. Got {max(image.width, image.height)} when {max(resolutions)} was required.")
+            sizes = [(size, size) for size in sorted(resolutions, reverse=True)]
+            resized_images = [image.resize(size, _Image.Resampling.BICUBIC) for size in sizes]
+            resized_images[0].save(output_path, sizes=sizes, append_images=resized_images[1:])
 
     def bitmap_to_ico(self, output_path: str, *resolutions: int) -> None:
         """
@@ -140,9 +157,18 @@ class BitmapImage:
             raise ValueError(f"Provided output path must have `.ico` extension.")
         if not len(resolutions):
             raise ValueError("No output resolutions were provided.")
-        with _Image.open(_BytesIO(self._source_bytes)) as image:
-            if not self.is_valid_ico(max(resolutions)):
-                raise ValueError(f"Source dimensions are invalid. Got {max(image.width, image.height)} when {max(resolutions)} was required.")
-            sizes = [(size, size) for size in sorted(resolutions, reverse=True)]
-            resized_images = [image.resize(size, _Image.Resampling.BICUBIC) for size in sizes]
-            resized_images[0].save(output_path, sizes=sizes, append_images=resized_images[1:])
+        self._bitmap_to_icon(output_path, *resolutions)
+
+    def bitmap_to_icns(self, output_path: str) -> None:
+        """
+        Saves bitmap to ICNS to the specified path. Width and height of bitmap image must be the same value.
+
+        :param output_path: Path to save to. Must have proper extension.
+        :raise IOError: If provided output path is invalid.
+        :raise ValueError: If provided output path does not have proper extension, or if source image has invalid dimensions.
+        """
+        if not self._valid_destination_io(output_path):
+            raise IOError(f"Provided output path is invalid: {output_path}")
+        if not self._valid_destination_extension(output_path, self.ICNS):
+            raise ValueError(f"Provided output path must have `.icns` extension.")
+        self._bitmap_to_icon(output_path, *self.ICNS_SIZES)
