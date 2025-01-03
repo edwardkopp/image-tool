@@ -122,6 +122,9 @@ class App(_Tk):
         except ValueError:
             self._loaded_image = None
             self._file_label.config(text="Invalid file selected." if filename else "No file selected.")
+        except FileExistsError:
+            self._loaded_image = None
+            self._file_label.config(text="Invalid file selected. Nothing can be done with icon files.")
         else:
             self._file_label.config(text=filename)
         self._update_icon_convert_state()

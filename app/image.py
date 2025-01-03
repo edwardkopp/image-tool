@@ -40,7 +40,7 @@ class BitmapImage:
         :param path: Path to bitmap file.
         :raise IOError: If ``path`` is not a file or inaccessible.
         :raise ValueError: If ``path`` is pointing to an unrecognized file type.
-        :raise FileExistsError: If ``path`` is pointing to an ICO file, as nothing can be done with it.
+        :raise FileExistsError: If ``path`` is pointing to an icon file, as nothing can be done with it.
         """
         if not _isfile(path) or not _access(path, _R_OK):
             raise IOError(f"Provided `path` is invalid: {path}")
