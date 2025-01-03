@@ -132,7 +132,7 @@ class App(_Tk):
         valid_types = [
             (label, extensions)
             for label, extensions in image_types_copy.items()
-            if self._loaded_image.source_extension not in extensions and label != self._loaded_image.ICO
+            if self._loaded_image.source_extension not in extensions and label not in (self._loaded_image.ICO, self._loaded_image.ICNS)
         ]
         destination = _asksave(
             parent=self,
