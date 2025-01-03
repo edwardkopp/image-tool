@@ -47,8 +47,8 @@ class BitmapImage:
         self.source_extension = self._extension(path)
         if self.source_extension not in self.VALID_EXTENSIONS:
             raise ValueError(f"Provided `path` has an unrecognized extension: {self.source_extension}")
-        if self.source_extension in self.IMAGE_TYPES[self.ICO]:
-            raise FileExistsError("Provided `path` seems to point to an ICO file; nothing can be done with it.")
+        if self.source_extension in self.IMAGE_TYPES[self.ICO] + self.IMAGE_TYPES[self.ICNS]:
+            raise FileExistsError("Provided `path` seems to point to an icon file; nothing can be done with it.")
         with open(path, "rb") as image:
             self._source_bytes = image.read()
 
