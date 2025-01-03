@@ -94,10 +94,10 @@ class App(_Tk):
         if not self._is_source_image_loaded():
             fully_invalid(self._NO_SOURCE_SELECTION_TEXT)
             return
-        if not self._loaded_image.is_valid_ico():
+        if not self._loaded_image.is_valid_icon():
             fully_invalid("Source file must have equal width and height for ICO.")
             return
-        filtered_presets = {key: value for key, value in self._ICO_PRESET_CHOICES.items() if self._loaded_image.is_valid_ico(max(value))}
+        filtered_presets = {key: value for key, value in self._ICO_PRESET_CHOICES.items() if self._loaded_image.is_valid_icon(max(value))}
         if not len(filtered_presets):
             fully_invalid("Source file is too small for ICO.")
             return
