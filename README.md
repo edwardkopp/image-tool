@@ -1,9 +1,6 @@
 # Image Tool
 
-An image converter tool for uncommon bitmap image conversions. The original goals of this are:
-
-- Convert to ICO
-- Convert to and from WEBP
+An image converter tool, so I can stop using online converters.
 
 ## Supported Bitmap Files
 
@@ -11,17 +8,20 @@ The following file types are supported:
 
 - PNG
 - JPG
+- BMP
 - WEBP
 - ICO
+- ICNS
 
-### Making ICO Files
+### Making Icon Files
 
-A dropdown menu is used to select what sizes to use in your ICO. In most cases, you should use the options labeled "Recommended" for your particular use case.
+A dropdown selection is used to select what sizes to use in your icon file.
 
-To convert to ICO, source images must have the same width and height, and must reach a minimum size depending on the output ICO sizes selected. The minimum dimensions required are:
+To convert to an icon, the source image must be square, and must reach a minimum size depending on the dropdown selection. The minimum dimensions required are:
 
-- 32x32 (for "Minimum" preset) or 48x48 (for "Recommended" preset) for website favicon
-- 256x256 for program icon
+- 64x64 for website favicon
+- 256x256 for program icon (ICO)
+- 1024x1024 for Apple icon
 
 ## Python Version
 
