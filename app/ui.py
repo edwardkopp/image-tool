@@ -21,14 +21,12 @@ class App(_Tk):
 
     _NO_SOURCE_SELECTION_TEXT = "No selection."
 
-    _ICO_APP_MINIMUM = "Program Icon Minimum"
-    _ICO_APP_RECOMMENDED = "Program Icon Recommended"
+    _ICO_APP = "Program Icon"
     _ICO_FAVICON = "Website Favicon Minimum"
     _ICO_FAVICON_EXPANDED = "Website Favicon Recommended"
 
     _ICO_PRESET_CHOICES = {
-        _ICO_APP_MINIMUM: [16, 24, 32, 48, 256],
-        _ICO_APP_RECOMMENDED: [16, 24, 32, 48, 64, 128, 256],
+        _ICO_APP: [16, 24, 32, 48, 64, 128, 256],
         _ICO_FAVICON: [16, 32, 48],
         _ICO_FAVICON_EXPANDED: [16, 32, 48, 64]
     }
@@ -90,7 +88,7 @@ class App(_Tk):
         def fully_invalid(status_message: str) -> None:
             self._ico_status.config(text=status_message)
             self._ico_size_preset.config(values=list(self._ICO_PRESET_CHOICES.keys()), state="disabled")
-            self._ico_size_preset.set(self._ICO_APP_RECOMMENDED)
+            self._ico_size_preset.set(self._ICO_APP)
             self._ico_convert_button.config(text="Unavailable", state="disabled")
 
         if not self._is_source_image_loaded():
