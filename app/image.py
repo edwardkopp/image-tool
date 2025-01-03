@@ -93,9 +93,9 @@ class BitmapImage:
         for filetype in valid_filetypes:
             if filetype not in self.IMAGE_TYPES:
                 continue
-            if extension not in self.IMAGE_TYPES[filetype]:
-                return False
-        return True
+            if extension in self.IMAGE_TYPES[filetype]:
+                return True
+        return False
 
     def bitmap_convert(self, output_path: str) -> None:
         """
