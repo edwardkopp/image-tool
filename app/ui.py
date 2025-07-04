@@ -1,7 +1,4 @@
-from tkinter import (
-    Tk as _Tk,
-    BOTH as _BOTH
-)
+from tkinter import Tk as _Tk
 from tkinter.ttk import (
     Button as _Button,
     Label as _Label,
@@ -38,14 +35,14 @@ class App(_Tk):
         self.geometry("400x500")
         self.resizable(False, False)
         group_frame = _Frame(self)
-        group_frame.pack(fill=_BOTH, expand=True)
+        group_frame.pack(fill="both", expand=True)
         select_group = _LabelFrame(group_frame, text="File Selection")
-        select_group.pack(fill=_BOTH, expand=True, padx=8, pady=8)
+        select_group.pack(fill="both", expand=True, padx=8, pady=8)
         self._file_label = _Label(select_group, text=self._NO_SOURCE_SELECTION_TEXT)
         self._file_label.pack(pady=16)
         _Button(select_group, text="Select A File", command=self._select_input_file).pack(pady=8)
         ico_group = _LabelFrame(group_frame, text="Convert To Icon")
-        ico_group.pack(fill=_BOTH, expand=True, padx=8, pady=8)
+        ico_group.pack(fill="both", expand=True, padx=8, pady=8)
         self._ico_status = _Label(ico_group)
         self._ico_status.pack(pady=16)
         self._ico_size_preset = _Combobox(ico_group, width=30)
@@ -54,7 +51,7 @@ class App(_Tk):
         self._ico_convert_button.pack(pady=8)
         self._update_icon_convert_state()
         convert_group = _LabelFrame(group_frame, text="Convert To Other Bitmap")
-        convert_group.pack(fill=_BOTH, expand=True, padx=8, pady=8)
+        convert_group.pack(fill="both", expand=True, padx=8, pady=8)
         self._standard_status = _Label(convert_group, text="You can select the output file type when saving.")
         self._standard_status.pack(pady=16)
         self._convert_button = _Button(convert_group, command=self._common_convert)
