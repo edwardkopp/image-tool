@@ -25,4 +25,4 @@ To convert to an icon, the source image must be square, and must reach a minimum
 
 ## Python Version
 
-Use Python 3.13.
+Use Python 3.14
